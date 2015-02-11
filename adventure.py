@@ -47,7 +47,6 @@ def south():
 def west():
     print "To go west press w then enter"
 
-
 def setup():
     #global is used to create variables that can be used throughout our game
     global name
@@ -90,6 +89,33 @@ def enemy():
     print "Your enemy has " + " " + str(enemyHP) + " " + "Health Points"
     print "Your enemy has " + " " + str(enemyMP) + " " + "Magic Points"
 
+def heal():
+    global HP
+    global MP
+    global name 
+    print name+" "+"you has " + " " + str(HP) + " " + "Health Points! do you want to consult a doctor?"
+    if raw_input() == "y":
+        print "Hello I'm Dr. Gozilla I can heal you, but i costs 3 Magicpoints, should I heal you?"
+        if raw_input() == "y": 
+          HP = HP + randint(5,20)
+          MP = MP -3
+          print "Now you are healed, your Magic Points :" + " " + str(MP) 
+          print "your Health Points: " + str(HP)     
+	else:
+	  print "than you have to die!"
+          HP = 0
+def ranger():
+    global rangername
+    global message
+    response = ["Hi", "Are you shure to walk through the forest, its dangerous!", "I never have seen you, from which country are you"]
+    rangernamechoice = ["George", "Fred", "Olaf", "Pit"]
+    shuffle(rangernamechoice)
+    rangername = rangernamechoice[0]
+    print "\nHello I am " + rangername + " Would you like to talk to with me? If yes type y\n"
+    if raw_input() == 'y':
+          shuffle(response)
+          message = response[0]
+          print message
 
 #We now use our functions in the game code, we call the title, the castle picture and then ask the game to run the setup for our character.
 clear_screen()
@@ -137,37 +163,54 @@ print "\n"
 north()
 east()
 west()
+south()
 move = raw_input("Where would you like to go? ")
 if move == 'n':
     print "\nYou move to the north, walking in the sunshine."
     print "A villager is in your path and greets you"
+    villager()
 #elif is short for Else If and it means that if the previous condition is false, to check this condition to see if that is true.
 elif move == 'e':
     print "\nYou walk to the river which lies to the east of your home."
     print "A villager is in your path and greets you"
+    villager()
 elif move == 'w':
     print "\nYou walk to the field of wild flowers, stopping to take in the beauty"
     print "A villager is in your path and greets you\n"
-
-villager()
+    villager()
+elif move == 's':
+    print "\nYou walk through the dangerous forest, with a lot of enemies"
+    print "A ranger is in your path and greets you\n"
+    ranger()
 enemy()
 sleep(3)
 
 fight = raw_input("Do you wish to fight?" )
 
 if fight == "y":
-    while HP > 0:
+    while HP > 0 and enemyHP > 0:
 #This loop will only work while our characters HP is greater than 0.
         hit = randint(0,5)
         print "You swing your sword and cause " + str(hit) + " of damage"
         enemyHP = enemyHP - hit
         print enemyHP
-        enemyhit = randint(0,5)
-        print "The ogre swings a club at you and causes " + str(enemyhit) + " of damage"
-        HP = HP - enemyhit
-        print HP
+        if enemyHP <= 0:
+             HP = randint(5,20)
+	     mp = randint(5,20)
+	     print "Gratulation! You won and got" +" "+ str(mp)+" "+"Magic Points. Your Helthpoints: " + str(HP)
+	     MP = MP +mp 
+	     print "\nyour Magicpoints: " + str(MP) +"\n"
+	else:	
+        	enemyhit = randint(0,5)
+        	print "The ogre swings a club at you and causes " + str(enemyhit) + " of damage"
+        	HP = HP - enemyhit
+        	print HP
+        	if HP < 1:
+	 		heal()
+
 else:
     print "You turn and run away from the ogre"
+
 
 print "This is where this template ends, this is now YOUR world, build your adventure and share it with the world"
 
