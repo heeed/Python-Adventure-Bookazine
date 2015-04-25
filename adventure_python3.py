@@ -175,10 +175,10 @@ elif m == 'w':
     print ("A villager is in your path and greets you\n")
 elif m == 's':
     print ("\nYou walk in too a deep and dark forest, and you are a little bit angshious")
-	print ("\A villagert is in your path and greets you\n")
-else 
-	print ("\n You are staying here! The game ends.")
-	sys.exit(0)
+    print ("\A villagert is in your path and greets you\n")
+else: 
+    print ("\n You are staying here! The game ends.")
+    sys.exit(0)
 villager()
 enemy()
 sleep(3)
