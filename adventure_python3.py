@@ -81,16 +81,39 @@ def enemy():
     global enemyHP
     global enemyMP
     global enemyname
-    enemyHP = randint(5,20)
-    enemyMP = randint(5,20)
+    
+    
     #Below is the enemy's name, perhaps you could change this to a list and then shuffle the list, such as we did for the villager above.
-    enemyname = "Ogre"
+    enemynamechoice = ["Ogre", "Drac"]
+    shuffle(enemynamechoice)
+    enemyname = enemynamechoice[0]   
+    if enemyname == "Drac":
+       enemyHP = randint(10,30)
+       enemyMP = randint(8,25)
+    else:
+       enemyHP = randint(5,20)
+       enemyMP = randint(5,15)
     print ("\nSuddenly you hear a roar, and from the shadows you see an "+enemyname+" coming straight at you....")
     #print enemyname
     print ("Your enemy has " + " " + str(enemyHP) + " " + "Health Points")
     print ("Your enemy has " + " " + str(enemyMP) + " " + "Magic Points")
 
-
+def heal():
+    global HP  
+    global MP
+    print ("\nYour Helth Points are: " + str(HP) + " do you want a doctor? If you want type y")
+    if input() == "y":
+        print ("\nHello I'm Dr. Goozilla, I can heal you, but it costs 3 MP! Do you want this?")
+        if input() == "y" and MP > 0:
+           MP  = MP -3
+           HP = randint (5,20)
+           print ("\nYou are now healed! Your Health Points:" + " " + str(HP) + " " + "Your Magic Skill :" + " " + str(MP))
+        else:
+           print ("\nI can't heal you, because your Magic Skill is too less!")
+           HP = 0
+    else:
+          print ("\n so you must die!")
+          HP = 0
 #We now use our functions in the game code, we call the title, the castle picture and then ask the game to run the setup for our character.
 clear_screen()
 title()
@@ -156,16 +179,26 @@ sleep(3)
 fight = input("Do you wish to fight?" )
 
 if fight == "y":
-    while HP > 0:
+    while HP > 0 and enemyHP >0:
 #This loop will only work while our characters HP is greater than 0.
         hit = randint(0,5)
         print ("You swing your sword and cause " + str(hit) + " of damage")
         enemyHP = enemyHP - hit
-        print (enemyHP)
-        enemyhit = randint(0,5)
-        print ("The ogre swings a club at you and causes " + str(enemyhit) + " of damage")
-        HP = HP - enemyhit
-        print (HP)
+        if enemyHP < 1:
+          mp = randint(5,20)
+          hp = randint(5,20)
+          print("\nGratulation! You won and got:" + " " + str(mp) + " " + "Magic Points and: " + " " + str(hp) + " " + "Health Points")
+          HP = HP + hp
+          MP = MP + mp
+          print ("\n You have:" + " " + str(HP) + " Health Points and: " + str(MP) + " Magic Points")
+        else:   
+          print ("\n The enemy has " + str(enemyHP) + "Helthpoints")
+          enemyhit = randint(0,5)
+          print ("\nThe " + enemyname + " swings a club at you and causes " + str(enemyhit) + " of damage")
+          HP = HP - enemyhit
+          print ("\nYou have: " + str(HP) + "Healthpoints")
+        if HP < 0:
+          heal()
 else:
     print ("You turn and run away from the ogre")
 
