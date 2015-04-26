@@ -114,6 +114,9 @@ def heal():
     else:
           print ("\n so you must die!")
           HP = 0
+		  
+		  def move():
+	
 #We now use our functions in the game code, we call the title, the castle picture and then ask the game to run the setup for our character.
 clear_screen()
 title()
@@ -159,19 +162,25 @@ print ("In the distance to the north you can see a small village, to the east yo
 print ("\n")
 north()
 east()
+south()
 west()
-move = input("Where would you like to go? ")
-if move == 'n':
+m = input("Where would you like to go? ")
+if m == 'n':
     print ("\nYou move to the north, walking in the sunshine.")
     print ("A villager is in your path and greets you")
 #elif is short for Else If and it means that if the previous condition is false, to check this condition to see if that is true.
-elif move == 'e':
+elif m == 'e':
     print ("\nYou walk to the river which lies to the east of your home.")
     print ("A villager is in your path and greets you")
-elif move == 'w':
+elif m == 'w':
     print ("\nYou walk to the field of wild flowers, stopping to take in the beauty")
     print ("A villager is in your path and greets you\n")
-
+elif m == 's':
+    print ("\nYou walk in too a deep and dark forest, and you are a little bit angshious")
+	print ("\A villagert is in your path and greets you\n")
+else 
+	print ("\n You are staying here! The game ends.")
+	sys.exit(0)
 villager()
 enemy()
 sleep(3)
