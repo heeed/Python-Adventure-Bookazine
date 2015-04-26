@@ -115,8 +115,6 @@ def heal():
           print ("\n so you must die!")
           HP = 0
 		  
-		  def move():
-	
 #We now use our functions in the game code, we call the title, the castle picture and then ask the game to run the setup for our character.
 clear_screen()
 title()
