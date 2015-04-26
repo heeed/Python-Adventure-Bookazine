@@ -1,3 +1,4 @@
+
 __author__ = 'Les Pounder'
 
 #The lines below import modules of code into our game, in particular these import time functions to allow us to pause and stop the game, and random provides a method of choosing random numbers or characters.
@@ -80,11 +81,22 @@ def enemy():
     global enemyHP
     global enemyMP
     global enemyname
-    enemyHP = randint(5,20)
-    enemyMP = randint(5,20)
-    #Below is the enemy's name, perhaps you could change this to a list and then shuffle the list, such as we did for the villager above.
-    enemyname = "Ogre"
-    print "\nSuddenly you hear a roar, and from the shadows you see an "+enemyname+" coming straight at you...."
+    global i  
+    max = [20,5,10]
+    min = [5,1,3]
+    #Below a list,with the names of the enemies. we will shuffle that you'll get one of these.
+    enemynamechoice =["Ogre","Ghost","Drac"]
+    shuffle(enemynamechoice)
+    enemyname=enemynamechoice[0]
+    if enemyname == "Ogre":
+       i = 0 
+    elif enemyname == "Drac":
+       i = 2
+    else:
+       i =1 
+    enemyHP = randint(min[i],max[i])
+    enemyMP = randint(min[i],max[i])
+    print " you hear a roar, and from the shadows you see an "+enemyname+" coming straight at you...."
     #print enemyname
     print "Your enemy has " + " " + str(enemyHP) + " " + "Health Points"
     print "Your enemy has " + " " + str(enemyMP) + " " + "Magic Points"
@@ -181,13 +193,40 @@ elif move == 'w':
 elif move == 's':
     print "\nYou walk through the dangerous forest, with a lot of enemies"
     print "A ranger is in your path and greets you\n"
+    enemies = randint(1,5) 
     ranger()
-enemy()
-sleep(3)
+    print "you have " + str(enemies) + " enemies"
+    while enemies > 0:
+      enemy() 
+      fight= raw_input("Do you want to fight?")
+      if fight == "y":
+         while HP > 0 and enemyHP > 0:
+#This loop will only work while our characters HP is greater than 0.
+            hit = randint(0,5)
+            print "You swing your sword and cause " + str(hit) + " of damage"
+            enemyHP = enemyHP - hit
+            print enemyHP
+            if enemyHP <= 0:
+              HP = randint(5,20)
+              mp = randint(5,20)
+              print "Gratulation! You won and got" +" "+ str(mp)+" "+"Magic Points. Your Helthpoints: " + str(HP)
+              MP = MP +mp
+              print "\nyour Magicpoints: " + str(MP) +"\n"
+              enemies -= 1            
+            else:
+                enemyhit = randint(0,5)
+                print "The ogre swings a club at you and causes " + str(enemyhit) + " of damage"
+                HP = HP - enemyhit
+                print HP
+                if HP < 1:
+                        heal()
+      else:
+          print "\nYou run away from the " + enemyname + "."
+          sys.exit(0)
+if move != 's':        
+ fight = raw_input("\nDo you wish to fight?" )
 
-fight = raw_input("Do you wish to fight?" )
-
-if fight == "y":
+ if fight == "y":
     while HP > 0 and enemyHP > 0:
 #This loop will only work while our characters HP is greater than 0.
         hit = randint(0,5)
@@ -208,7 +247,7 @@ if fight == "y":
         	if HP < 1:
 	 		heal()
 
-else:
+ else:
     print "You turn and run away from the ogre"
 
 
